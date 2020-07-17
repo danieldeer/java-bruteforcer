@@ -1,5 +1,7 @@
 package space.crack;
 
+import java.nio.file.Path;
+
 /**
  * A class that provides bruteforcing capabilities.
  * @author User
@@ -32,6 +34,16 @@ public class Bruteforcer {
 	}
 	
 	/**
+	 * Sets up the bruteforcer with the given hash to be bruteforced using the specified wordlist.
+	 * @param hash
+	 */
+	public Bruteforcer(final String targetHash, final Path dictionaryFilePath) {
+		this.wordGenerator = new DictionaryWordGenerator(dictionaryFilePath);
+		this.encryptionRoutine = new StringToSha256ToBase64Routine();
+		this.targetHash = targetHash;
+	}
+	
+	/**
 	 * Bruteforces the given hash and returns the solution.
 	 * @param hash
 	 * @return result
@@ -41,7 +53,12 @@ public class Bruteforcer {
 		boolean solutionFound = false;
 		while(!solutionFound)
 		{
-			final String guess = wordGenerator.next();
+			String guess;
+			try {
+				guess = wordGenerator.next();
+			} catch (Exception e) {
+				break;
+			}
 			final String hash = encryptionRoutine.encrypt(guess);
 			if(hash.equals(this.targetHash))
 			{
