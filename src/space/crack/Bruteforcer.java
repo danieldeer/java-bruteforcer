@@ -44,6 +44,16 @@ public class Bruteforcer {
 	}
 	
 	/**
+	 * Sets up the bruteforcer with the given hash to be bruteforced and the given {@WordGenerator}.
+	 * @param hash
+	 */
+	public Bruteforcer(final String targetHash, WordGenerator wordGenerator) {
+		this.wordGenerator = wordGenerator;
+		this.encryptionRoutine = new StringToSha256ToBase64Routine();
+		this.targetHash = targetHash;
+	}
+	
+	/**
 	 * Bruteforces the given hash and returns the solution.
 	 * @param hash
 	 * @return result

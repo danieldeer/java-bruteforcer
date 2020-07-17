@@ -11,11 +11,15 @@ public class Main {
 		
 		long startTime = System.currentTimeMillis();
 		
-		final String targetHash = "ZHMI2QMAcFFKwQRRFe4CzUgCcPDCAzPzm6YS1vCPo3M=";
+		
+		
+		final String targetHash = "D7vum7HGNby46z7kORKU5n1Go/JUhuGgon/WQVtTfLk=";
 		final String dictionaryFilePathString = "10millionenpw.txt";
 		final Path dictionaryFilePath = new File(dictionaryFilePathString).toPath();
 		
-		Bruteforcer bruteforcer = new Bruteforcer(targetHash, dictionaryFilePath);
+		DictionaryWithSuffixNumbersWordGenerator wordGen = new DictionaryWithSuffixNumbersWordGenerator(dictionaryFilePath, 3);
+		Bruteforcer bruteforcer = new Bruteforcer(targetHash, wordGen);
+		
 		
 		System.out.println("Attempting the bruteforce of " + targetHash);
 		System.out.println("SOLUTION FOUND: " + bruteforcer.bruteforce());
