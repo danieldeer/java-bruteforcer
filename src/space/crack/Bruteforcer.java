@@ -3,6 +3,7 @@ package space.crack;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 /**
  * A class that provides bruteforcing capabilities.
@@ -14,6 +15,8 @@ public class Bruteforcer {
 	private WordGenerator wordGenerator;
 	private EncryptionRoutine encryptionRoutine;
 	private String targetHash;
+	private int startOffset = 0;
+	private int stepSize = 1;
 	
 	/**
 	 * Sets up the bruteforcer with the given hash to be bruteforced.
@@ -62,6 +65,8 @@ public class Bruteforcer {
 	 */
 	public String bruteforce()
 	{
+		generateWordsUntilOffsetIsReached();
+		
 		Logger.getGlobal().log(Level.INFO, "Attempting to find key for hash " + this.targetHash);
 		boolean solutionFound = false;
 		StringBuilder guess = new StringBuilder();
@@ -71,6 +76,7 @@ public class Bruteforcer {
 		{
 			try {
 				guess.setLength(0);
+				skipWords(this.stepSize-1);
 				guess.append(wordGenerator.next());
 			} catch (Exception e) {
 				break;
@@ -86,6 +92,44 @@ public class Bruteforcer {
 		Logger.getGlobal().log(Level.INFO, "Could not find key");
 		return null;
 	}
+
+	private void skipWords(int numberOfWordsToSkip) {
+		IntStream.range(0,numberOfWordsToSkip).forEach($ -> {
+			try {
+				wordGenerator.next();
+			} catch (Exception e){
+			}
+		});
+	}
+
+	private void generateWordsUntilOffsetIsReached() {
+		IntStream.range(0,this.startOffset).forEach($ -> {
+			try {
+				wordGenerator.next();
+			} catch (Exception e){
+			}
+		});
+	}
+
+	/**
+	 * Set step size of the bruteforcer.
+	 * A step size of 1 will test every generated word.
+	 * A step size of 2 will test every second generated word.
+	 * etc.
+	 * Step size is used for multithreading, so multiple threads test different words.
+	 */
+	public void setStep(int stepSize) {
+		this.stepSize = stepSize;
+	}
 	
+	/**
+	 * Start the bruteforcer at the startOffset'th word.
+	 * If startOffset is 3, bruteforcer will start at the third word.
+	 * @param startOffset
+	 */
+	public void setOffset(int startOffset)
+	{
+		this.startOffset = startOffset;
+	}
 	
 }

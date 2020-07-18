@@ -2,34 +2,62 @@ package space.crack;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 public class Main {
 	
+	private static long performanceMeasurementStartTime;
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to SPACE CRACK");
-		
-		long startTime = System.currentTimeMillis();
-		
-		
-		
 
 		final String dictionaryFilePathString = "10millionenpw.txt";
 		final Path dictionaryFilePath = new File(dictionaryFilePathString).toPath();
 		
-		WordGenerator wordGen = new BruteforceWordGenerator(CharacterSets.ALL_LETTERS_ALL_NUMBERS+"$!&#");
-		
-		
-		EncryptionRoutine encryptionRoutine = new StringToSha256ToBase64Routine();
-		final String targetHash = encryptionRoutine.encrypt("AA$M");
-		
-		new Bruteforcer(targetHash, wordGen).bruteforce();
 		
 		
 		
+		final String targetHash = "D7vum7HGNby46z7kORKU5n1Go/JUhuGgon/WQVtTfLk=";
+		final String characterSet = CharacterSets.ALL_LETTERS_ALL_NUMBERS+"$!&#";
+		final int numberOfThreads = 3;
+		
+		
+		ExecutorService pool = Executors.newFixedThreadPool(numberOfThreads);
+		
+		startDurationMeasurement();
+		// create numberOfThreads new Threads to perform the bruteforce
+		IntStream.range(0,numberOfThreads).forEach(i-> {
+			
+			pool.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					Bruteforcer bruteforcer = new Bruteforcer(targetHash, new BruteforceWordGenerator(characterSet));
+					bruteforcer.setOffset(i);
+					bruteforcer.setStep(numberOfThreads);
+					bruteforcer.bruteforce();
+					endDurationMeasurement();
+					System.exit(0);
+				}
+			});
+		});
+
+		
+		
+	}
+	
+	
+	private static void startDurationMeasurement()
+	{
+		performanceMeasurementStartTime = System.currentTimeMillis();
+	}
+	private static void endDurationMeasurement()
+	{
 		long endTime = System.currentTimeMillis();
-		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-		
+		long duration = (endTime - performanceMeasurementStartTime);  //divide by 1000000 to get milliseconds.
 		System.out.println("The execution took about " + String.format("%d sec, %d ms", 
 			    TimeUnit.MILLISECONDS.toSeconds(duration), 
 			    duration - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(duration)))
