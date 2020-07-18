@@ -13,16 +13,18 @@ public class Main {
 		
 		
 		
-		final String targetHash = "D7vum7HGNby46z7kORKU5n1Go/JUhuGgon/WQVtTfLk=";
+
 		final String dictionaryFilePathString = "10millionenpw.txt";
 		final Path dictionaryFilePath = new File(dictionaryFilePathString).toPath();
 		
-		DictionaryWithSuffixNumbersWordGenerator wordGen = new DictionaryWithSuffixNumbersWordGenerator(dictionaryFilePath, 3);
-		Bruteforcer bruteforcer = new Bruteforcer(targetHash, wordGen);
+		WordGenerator wordGen = new BruteforceWordGenerator(CharacterSets.ALL_LETTERS_ALL_NUMBERS+"$!&#");
 		
 		
-		System.out.println("Attempting the bruteforce of " + targetHash);
-		System.out.println("SOLUTION FOUND: " + bruteforcer.bruteforce());
+		EncryptionRoutine encryptionRoutine = new StringToSha256ToBase64Routine();
+		final String targetHash = encryptionRoutine.encrypt("AA$M");
+		
+		new Bruteforcer(targetHash, wordGen).bruteforce();
+		
 		
 		
 		long endTime = System.currentTimeMillis();

@@ -1,6 +1,8 @@
 package space.crack;
 
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A class that provides bruteforcing capabilities.
@@ -60,21 +62,28 @@ public class Bruteforcer {
 	 */
 	public String bruteforce()
 	{
+		Logger.getGlobal().log(Level.INFO, "Attempting to find key for hash " + this.targetHash);
 		boolean solutionFound = false;
+		StringBuilder guess = new StringBuilder();
+		StringBuilder hash = new StringBuilder();
+		StringBuilder targetHash = new StringBuilder(this.targetHash);
 		while(!solutionFound)
 		{
-			String guess;
 			try {
-				guess = wordGenerator.next();
+				guess.setLength(0);
+				guess.append(wordGenerator.next());
 			} catch (Exception e) {
 				break;
 			}
-			final String hash = encryptionRoutine.encrypt(guess);
-			if(hash.equals(this.targetHash))
+			hash.setLength(0);
+			hash.append(encryptionRoutine.encrypt(guess.toString()));
+			if(hash.toString().equals(targetHash.toString()))
 			{
-				return guess;
+				Logger.getGlobal().log(Level.INFO, "SUCCESS! Hash " + this.targetHash + " has key: " + guess);
+				return guess.toString();
 			}
 		}
+		Logger.getGlobal().log(Level.INFO, "Could not find key");
 		return null;
 	}
 	
