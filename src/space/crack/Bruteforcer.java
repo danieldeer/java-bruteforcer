@@ -5,6 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
+import represetation.Base64Representation;
+import represetation.ByteRepresentation;
+
 /**
  * A class that provides bruteforcing capabilities.
  * @author User
@@ -18,13 +21,16 @@ public class Bruteforcer {
 	private int startOffset = 0;
 	private int stepSize = 1;
 	
+	//By default, represent byte arrays as Base64
+	private final ByteRepresentation representation = new Base64Representation();
+	
 	/**
 	 * Sets up the bruteforcer with the given hash to be bruteforced.
 	 * @param hash
 	 */
 	public Bruteforcer(final String targetHash) {
 		this.wordGenerator = new BruteforceWordGenerator(CharacterSets.ALL_LETTERS_ALL_NUMBERS);
-		this.encryptionRoutine = new StringToSha256ToBase64Routine();
+		this.encryptionRoutine = new StringToSha256Routine();
 		this.targetHash = targetHash;
 	}
 	
@@ -34,7 +40,7 @@ public class Bruteforcer {
 	 */
 	public Bruteforcer(final String targetHash, final String characterSet) {
 		this.wordGenerator = new BruteforceWordGenerator(characterSet);
-		this.encryptionRoutine = new StringToSha256ToBase64Routine();
+		this.encryptionRoutine = new StringToSha256Routine();
 		this.targetHash = targetHash;
 	}
 	
@@ -44,7 +50,7 @@ public class Bruteforcer {
 	 */
 	public Bruteforcer(final String targetHash, final Path dictionaryFilePath) {
 		this.wordGenerator = new DictionaryWordGenerator(dictionaryFilePath);
-		this.encryptionRoutine = new StringToSha256ToBase64Routine();
+		this.encryptionRoutine = new StringToSha256Routine();
 		this.targetHash = targetHash;
 	}
 	
@@ -54,7 +60,7 @@ public class Bruteforcer {
 	 */
 	public Bruteforcer(final String targetHash, WordGenerator wordGenerator) {
 		this.wordGenerator = wordGenerator;
-		this.encryptionRoutine = new StringToSha256ToBase64Routine();
+		this.encryptionRoutine = new StringToSha256Routine();
 		this.targetHash = targetHash;
 	}
 	
@@ -82,7 +88,9 @@ public class Bruteforcer {
 				break;
 			}
 			hash.setLength(0);
-			hash.append(encryptionRoutine.encrypt(guess.toString()));
+			hash.append(
+						this.representation.getAsString(encryptionRoutine.encrypt(guess.toString()))
+					);
 			if(hash.toString().equals(targetHash.toString()))
 			{
 				Logger.getGlobal().log(Level.INFO, "SUCCESS! Hash " + this.targetHash + " has key: " + guess);

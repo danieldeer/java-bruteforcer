@@ -20,7 +20,7 @@ public class Main {
 		
 		
 		
-		final String targetHash = "D7vum7HGNby46z7kORKU5n1Go/JUhuGgon/WQVtTfLk=";
+		final String targetHash = "+mkLggYe39KFJimuuoqJd7V+QPy3fRp6KLJsumJZEgQ=";
 		final String characterSet = CharacterSets.ALL_LETTERS_ALL_NUMBERS+"$!&#";
 		final int numberOfThreads = 3;
 		

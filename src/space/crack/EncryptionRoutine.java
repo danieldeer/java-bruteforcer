@@ -7,6 +7,6 @@ package space.crack;
  */
 public interface EncryptionRoutine {
 
-	public String encrypt(String string);
+	public byte[] encrypt(String string);
 	
 }
