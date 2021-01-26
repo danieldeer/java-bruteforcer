@@ -19,8 +19,8 @@ public class Main {
 		
 		
 		
-		
-		final String targetHash = "+mkLggYe39KFJimuuoqJd7V+QPy3fRp6KLJsumJZEgQ=";
+		//this is the String "hey" encrypted by SHA-256 represented as a hexadecimal
+		final String targetHash = "fa690b82061edfd2852629aeba8a8977b57e40fcb77d1a7a28b26cba62591204"; 
 		final String characterSet = CharacterSets.ALL_LETTERS_ALL_NUMBERS+"$!&#";
 		final int numberOfThreads = 3;
 		

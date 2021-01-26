@@ -5,8 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
-import represetation.Base64Representation;
 import represetation.ByteRepresentation;
+import represetation.HexRepresentation;
 
 /**
  * A class that provides bruteforcing capabilities.
@@ -22,7 +22,7 @@ public class Bruteforcer {
 	private int stepSize = 1;
 	
 	//By default, represent byte arrays as Base64
-	private final ByteRepresentation representation = new Base64Representation();
+	private final ByteRepresentation representation = new HexRepresentation();
 	
 	/**
 	 * Sets up the bruteforcer with the given hash to be bruteforced.
