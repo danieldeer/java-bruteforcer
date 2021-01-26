@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Welcome to SPACE CRACK");
 
-		final String dictionaryFilePathString = "10millionenpw.txt";
+		final String dictionaryFilePathString = "10millionPasswords.txt";
 		final Path dictionaryFilePath = new File(dictionaryFilePathString).toPath();
 		
 		
