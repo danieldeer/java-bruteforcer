@@ -1,4 +1,4 @@
-package space.crack;
+package hirschdaniel.javaBruteforcer;
 
 import java.nio.file.Path;
 

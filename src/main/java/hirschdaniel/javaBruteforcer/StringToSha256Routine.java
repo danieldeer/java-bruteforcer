@@ -1,4 +1,4 @@
-package space.crack;
+package hirschdaniel.javaBruteforcer;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

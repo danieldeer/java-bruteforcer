@@ -1,4 +1,4 @@
-package space.crack;
+package hirschdaniel.javaBruteforcer;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

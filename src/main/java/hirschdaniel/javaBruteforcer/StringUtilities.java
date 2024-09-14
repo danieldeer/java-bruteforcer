@@ -1,10 +1,10 @@
-package space.crack;
+package hirschdaniel.javaBruteforcer;
 
 import java.nio.CharBuffer;
 
 /**
  * A class that provides String manipulation utilities.
- * @author User
+ * @author Daniel Hirsch
  *
  */
 public class StringUtilities {

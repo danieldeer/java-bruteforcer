@@ -1,4 +1,4 @@
-package space.crack;
+package hirschdaniel.javaBruteforcer;
 
 public class BruteforceWordGenerator implements WordGenerator{
 	

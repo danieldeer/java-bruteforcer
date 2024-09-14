@@ -1,4 +1,4 @@
-package space.crack;
+package hirschdaniel.javaBruteforcer;
 
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -10,7 +10,7 @@ import represetation.HexRepresentation;
 
 /**
  * A class that provides bruteforcing capabilities.
- * @author User
+ * @author Daniel Hirsch
  *
  */
 public class Bruteforcer {

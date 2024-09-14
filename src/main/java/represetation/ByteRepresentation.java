@@ -4,7 +4,7 @@ package represetation;
 /**
  * The representation of a byte[] array.
  * Intended to convert the byte[] to a String.
- * @author User
+ * @author Daniel Hirsch
  *
  */
 public interface ByteRepresentation {
