@@ -1,4 +1,4 @@
-# Readme: Java Bruteforcer
+# Java Bruteforcer
 
 This is a Java-based bruteforcing library which supports different bruteforcing algorithms:
 
